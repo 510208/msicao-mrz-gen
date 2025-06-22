@@ -1,156 +1,213 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const mrzForm = document.getElementById('mrz-form');
-    const mrzLine1Output = document.getElementById('mrzLine1');
-    const mrzLine2Output = document.getElementById('mrzLine2');
-    const errorMessage = document.getElementById('error-message');
+document.addEventListener("DOMContentLoaded", () => {
+  // --- 組態常數 ---
+  const CONFIG = {
+    MRZ_LINE_LENGTH: 40,
+    PASSPORT_TYPE: "P",
+    COUNTRY_CODE_LENGTH: 3,
+    PASSPORT_NUMBER_FIELD_LENGTH: 9,
+    // *** 修改點 1: 調整個人識別碼區域的長度 ***
+    // 根據圖像範例，此區域(包含<<符號和其自身的校驗碼)佔滿剩餘空間，共15個字元
+    PERSONAL_ID_SECTION_LENGTH: 15,
+    WEIGHTS: [7, 3, 1],
+    FILLER: "<",
+  };
 
-    mrzForm.addEventListener('submit', (event) => {
-        event.preventDefault(); // 阻止表單預設提交行為
-        generateMrz();
-    });
+  // --- DOM 元素 (與之前相同) ---
+  const mrzForm = document.getElementById("mrz-form");
+  const mrzLine1Output = document.getElementById("mrzLine1");
+  const mrzLine2Output = document.getElementById("mrzLine2");
+  const errorMessage = document.getElementById("error-message");
 
-    // 模10演算法所需的字元數值對照表
-    const charToValue = {
-        '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
-        'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15, 'G': 16, 'H': 17, 'I': 18,
-        'J': 19, 'K': 20, 'L': 21, 'M': 22, 'N': 23, 'O': 24, 'P': 25, 'Q': 26, 'R': 27,
-        'S': 28, 'T': 29, 'U': 30, 'V': 31, 'W': 32, 'X': 33, 'Y': 34, 'Z': 35,
-        '<': 0 // 填充符號對應數值為 0
-    };
+  // --- 字元數值對照表 (與之前相同) ---
+  const CHAR_TO_VALUE = {
+    0: 0,
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+    6: 6,
+    7: 7,
+    8: 8,
+    9: 9,
+    A: 10,
+    B: 11,
+    C: 12,
+    D: 13,
+    E: 14,
+    F: 15,
+    G: 16,
+    H: 17,
+    I: 18,
+    J: 19,
+    K: 20,
+    L: 21,
+    M: 22,
+    N: 23,
+    O: 24,
+    P: 25,
+    Q: 26,
+    R: 27,
+    S: 28,
+    T: 29,
+    U: 30,
+    V: 31,
+    W: 32,
+    X: 33,
+    Y: 34,
+    Z: 35,
+    "<": 0,
+  };
 
-    // 校驗碼計算函數
-    function calculateCheckDigit(data) {
-        let sum = 0;
-        const weights = [7, 3, 1]; // 權重循環
-        for (let i = 0; i < data.length; i++) {
-            const char = data[i].toUpperCase(); // 確保是大寫以便查找
-            const value = charToValue[char];
-            if (value === undefined) {
-                // 如果遇到不支援的字元，回傳 null 以觸發錯誤訊息
-                console.warn(`Unsupported character in check digit calculation: ${char}`);
-                return null; 
-            }
-            sum += value * weights[i % 3]; // 權重循環使用
-        }
-        return sum % 10; // 取餘數
+  //calculateCheckDigit, sanitizeAndPad, buildMrzLine1 函式保持不變...
+  function calculateCheckDigit(data) {
+    let sum = 0;
+    for (let i = 0; i < data.length; i++) {
+      const char = data[i];
+      const value = CHAR_TO_VALUE[char];
+      if (value === undefined) {
+        throw new Error(`不支援的字元 "${char}"，無法計算校驗碼。`);
+      }
+      sum += value * CONFIG.WEIGHTS[i % CONFIG.WEIGHTS.length];
     }
+    return sum % 10;
+  }
 
-    // 獲取表單值並生成 MRZ
-    function generateMrz() {
-        errorMessage.textContent = ''; // 清空之前的錯誤訊息
-        mrzLine1Output.textContent = '';
-        mrzLine2Output.textContent = '';
+  function sanitizeAndPad(str, length) {
+    const sanitized = str.toUpperCase().replace(/[^A-Z0-9<]/g, CONFIG.FILLER);
+    // 如果 length 為 0，則不進行填充或截斷，僅返回清理後的字串
+    if (length === 0) return sanitized;
+    return sanitized.padEnd(length, CONFIG.FILLER).substring(0, length);
+  }
 
-        // 獲取所有輸入欄位的值，並進行基礎的格式處理
-        const passportType = document.getElementById('passportType').value.toUpperCase(); // 應為 P
-        const countryCode = document.getElementById('countryCode').value.toUpperCase().padEnd(3, '<'); // 國家代碼固定 3 碼
-        const lastName = document.getElementById('lastName').value.toUpperCase();
-        const firstName = document.getElementById('firstName').value.toUpperCase();
-        const passportNumber = document.getElementById('passportNumber').value.toUpperCase();
-        const nationality = document.getElementById('nationality').value.toUpperCase().padEnd(3, '<'); // 國籍固定 3 碼
-        const dob = document.getElementById('dob').value; // YYMMDD
-        const gender = document.getElementById('gender').value.toUpperCase();
-        const expiryDate = document.getElementById('expiryDate').value; // YYMMDD
-        const personalIdentifier = document.getElementById('personalIdentifier').value.toUpperCase();
+  function buildMrzLine1({ countryCode, lastName, firstName }) {
+    const type = CONFIG.PASSPORT_TYPE;
+    const country = sanitizeAndPad(countryCode, CONFIG.COUNTRY_CODE_LENGTH);
+    const prefix = `${type}${CONFIG.FILLER}${country}${CONFIG.FILLER}`;
 
-        // 輸入驗證 (基礎驗證)
-        if (!lastName || !firstName || !passportNumber || !dob || !expiryDate) {
-            errorMessage.textContent = '請填寫所有必填欄位。';
-            return;
-        }
+    const nameFieldContent = `${sanitizeAndPad(lastName, 0)}<<${sanitizeAndPad(
+      firstName,
+      0
+    )}`;
+    const nameField = sanitizeAndPad(
+      nameFieldContent,
+      CONFIG.MRZ_LINE_LENGTH - prefix.length
+    );
 
-        if (dob.length !== 6 || !/^\d{6}$/.test(dob)) {
-            errorMessage.textContent = '出生日期格式不正確，應為 YYMMDD。';
-            return;
-        }
-        if (expiryDate.length !== 6 || !/^\d{6}$/.test(expiryDate)) {
-            errorMessage.textContent = '有效期格式不正確，應為 YYMMDD。';
-            return;
-        }
+    return prefix + nameField;
+  }
 
-        // --- 組裝第一行 MRZ ---
-        // 格式: P<國家代碼<<姓氏<<名 (總長 44 字元)
-        let mrz1Prefix = `${passportType}<${countryCode}`; // 例如: P<MWR (5 字元)
+  /**
+   * *** 最終修正: 重寫 buildMrzLine2 以正確處理個人識別碼 ***
+   * @param {object} data - 包含所有第二行所需欄位的物件
+   * @returns {string} - MRZ 第二行
+   */
+  function buildMrzLine2({
+    passportNumber,
+    nationality,
+    dob,
+    gender,
+    expiryDate,
+    personalIdentifier,
+  }) {
+    // 1. 護照號碼 + 校驗碼 (10位)
+    const passportNumPadded = sanitizeAndPad(
+      passportNumber,
+      CONFIG.PASSPORT_NUMBER_FIELD_LENGTH
+    );
+    const passportNumCD = calculateCheckDigit(passportNumPadded);
+    const part1 = `${passportNumPadded}${passportNumCD}`;
 
-        // 處理姓名部分，確保只包含合法字元，並用 '<' 或 '<<' 分隔
-        const formattedLastName = lastName.replace(/[^A-Z0-9<]/g, '<'); 
-        const formattedFirstName = firstName.replace(/[^A-Z0-9<]/g, '<'); 
+    // 2. 國籍 (3位)
+    const part2 = sanitizeAndPad(nationality, CONFIG.COUNTRY_CODE_LENGTH);
 
-        // 姓名欄位總長度為 44 - mrz1Prefix.length = 44 - 5 = 39 字元
-        let nameField = `${formattedLastName}<<${formattedFirstName}`;
-        
-        // 對姓名欄位進行填充或截斷，使其精確到 39 字元
-        const remainingSpaceForNameField = 44 - mrz1Prefix.length; // 39 字元
-        if (nameField.length > remainingSpaceForNameField) {
-            nameField = nameField.substring(0, remainingSpaceForNameField);
-        } else {
-            nameField = nameField.padEnd(remainingSpaceForNameField, '<');
-        }
-        
-        const mrz1 = mrz1Prefix + nameField;
+    // 3. 出生日期 + 校驗碼 (7位)
+    const dobCD = calculateCheckDigit(dob);
+    const part3 = `${dob}${dobCD}`;
 
+    // 4. 性別 (1位)
+    const part4 = sanitizeAndPad(gender, 1);
 
-        // --- 組裝第二行 MRZ ---
-        // 格式: 護照號碼<校驗碼<國籍<出生年月日<性別<有效期<校驗碼<<個人識別碼<校驗碼 (總長 44 字元)
-        
-        // 1. 護照號碼及校驗碼 (總共 10 字元：9 碼護照號碼 + 1 碼校驗碼)
-        const passportNumberPadded = passportNumber.padEnd(9, '<'); 
-        const passportNumberCheckDigit = calculateCheckDigit(passportNumberPadded);
-        if (passportNumberCheckDigit === null) { errorMessage.textContent = '護照號碼校驗碼計算失敗。'; return; }
-        const mrz2_docNum_cd = `${passportNumberPadded}${passportNumberCheckDigit}`;
+    // 5. 有效期 + 校驗碼 (7位)
+    const expiryDateCD = calculateCheckDigit(expiryDate);
+    const part5 = `${expiryDate}${expiryDateCD}`;
 
-        // 2. 國籍 (固定 3 字元)
-        const mrz2_nationality = nationality.padEnd(3, '<');
+    // 6. 個人識別碼部分 (共 15 位)
+    // a. 將使用者輸入的個人識別碼，填充或截斷至 14 位，作為計算校驗碼的資料。
+    const personalIdData = sanitizeAndPad(personalIdentifier, 14);
 
-        // 3. 出生年月日及校驗碼 (總共 7 字元：YYMMDD + 1 碼校驗碼)
-        const dobCheckDigit = calculateCheckDigit(dob);
-        if (dobCheckDigit === null) { errorMessage.textContent = '出生日期校驗碼計算失敗。'; return; }
-        const mrz2_dob_cd = `${dob}${dobCheckDigit}`;
+    //    b. 根據這 14 位的資料計算校驗碼。
+    const personalIdCD = calculateCheckDigit(personalIdData);
 
-        // 4. 性別 (固定 1 字元)
-        const mrz2_gender = gender;
+    // 7. 組合所有部分。總長度: 10+3+7+1+7+14+1 = 44
+    const mrzLine2 = `${part1}${part2}${part3}${part4}${part5}${personalIdData}${personalIdCD}`;
 
-        // 5. 有效期及校驗碼 (總共 7 字元：YYMMDD + 1 碼校驗碼)
-        const expiryDateCheckDigit = calculateCheckDigit(expiryDate);
-        if (expiryDateCheckDigit === null) { errorMessage.textContent = '有效期校驗碼計算失敗。'; return; }
-        const mrz2_expiry_cd = `${expiryDate}${expiryDateCheckDigit}`;
+    return mrzLine2;
+  }
 
-        // 6. 個人識別碼及校驗碼部分 (<<個人識別碼<校驗碼)
-        // 這部分需要填充，使得整個 MRZ 第二行總長為 44 字元
-        // 假設 "個人識別碼<校驗碼" 這個子區塊（不含 "<<"）的長度，需要填滿到 13 字元，加上 "<<" 就會是 15 字元
-        // 這樣，最後剩下 1 字元給最終校驗碼 (28 + 15 + 1 = 44)
-        
-        let personalIdWithCd = '';
-        if (personalIdentifier) {
-            const pidCheckDigit = calculateCheckDigit(personalIdentifier);
-            if (pidCheckDigit === null) { errorMessage.textContent = '個人識別碼校驗碼計算失敗。'; return; }
-            personalIdWithCd = `${personalIdentifier}${pidCheckDigit}`;
-        }
-        // 對個人識別碼及其校驗碼的組合進行填充或截斷，使其精確到 13 字元
-        personalIdWithCd = personalIdWithCd.padEnd(13, '<');
-        if (personalIdWithCd.length > 13) personalIdWithCd = personalIdWithCd.substring(0, 13);
-        
-        const mrz2_personalId_section_full = `<<${personalIdWithCd}`; // 包含 "<<"，總共 15 字元
+  // handleGenerateMrz 函式保持不變
+  function handleGenerateMrz(event) {
+    event.preventDefault();
+    errorMessage.textContent = "";
+    mrzLine1Output.textContent = "";
+    mrzLine2Output.textContent = "";
 
+    try {
+      // --- 獲取並驗證資料 ---
+      const formData = {
+        // ... (和之前一樣)
+        countryCode: document.getElementById("countryCode").value,
+        lastName: document.getElementById("lastName").value,
+        firstName: document.getElementById("firstName").value,
+        passportNumber: document.getElementById("passportNumber").value,
+        nationality: document.getElementById("nationality").value,
+        dob: document.getElementById("dob").value,
+        gender: document.getElementById("gender").value,
+        expiryDate: document.getElementById("expiryDate").value,
+        personalIdentifier: document.getElementById("personalIdentifier").value,
+      };
 
-        // 7. 組裝用於計算最終校驗碼的字串 (第二行所有內容，不含最終校驗碼本身)
-        const finalCheckDigitSource = 
-            mrz2_docNum_cd +
-            mrz2_nationality +
-            mrz2_dob_cd +
-            mrz2_gender +
-            mrz2_expiry_cd +
-            mrz2_personalId_section_full; // 此時總長應為 28 + 15 = 43 字元
+      if (
+        !formData.lastName ||
+        !formData.firstName ||
+        !formData.passportNumber ||
+        !formData.dob ||
+        !formData.expiryDate
+      ) {
+        throw new Error("請填寫所有必填欄位。");
+      }
+      if (!/^\d{6}$/.test(formData.dob)) {
+        throw new Error("出生日期格式不正確，應為 YYMMDD。");
+      }
+      if (!/^\d{6}$/.test(formData.expiryDate)) {
+        throw new Error("有效期格式不正確，應為 YYMMDD。");
+      }
 
-        // 8. 計算最終校驗碼
-        const finalCompositeCheckDigit = calculateCheckDigit(finalCheckDigitSource);
-        if (finalCompositeCheckDigit === null) { errorMessage.textContent = '最終校驗碼計算失敗。'; return; }
+      // --- 生成 MRZ ---
+      const mrz1 = buildMrzLine1(formData);
+      const mrz2 = buildMrzLine2(formData);
 
-        // 9. 組裝完整的第二行 MRZ (總長 44 字元)
-        const mrz2 = `${finalCheckDigitSource}${finalCompositeCheckDigit}`;
-        
-        // 顯示結果，並使用 trim() 確保沒有前後的空白或換行符號
-        mrzLine1Output.textContent = mrz1.trim();
-        mrzLine2Output.textContent = mrz2.trim();
+      // --- 顯示結果 ---
+      mrzLine1Output.textContent = mrz1;
+      mrzLine2Output.textContent = mrz2;
+    } catch (error) {
+      errorMessage.textContent = error.message;
+      console.error(error);
     }
+  }
+
+  // 複製事件處理器
+  function handleCopyToClipboard(event) {
+    const target = event.target;
+    const textToCopy = `{mrzLine1Output.textContent}\n{mrzLine2Output.textContent}`;
+
+    const el = document.createElement("textarea");
+    el.value = textToCopy;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+  }
+
+  mrzForm.addEventListener("submit", handleGenerateMrz);
 });

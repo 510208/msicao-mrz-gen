@@ -1,96 +1,131 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MRZ 產生器 - SamHacker Blog</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MRZ 產生與解析器 - SamHacker Blog</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header>
-        <h1>MRZ 產生器</h1>
-        <p>依據微國國際民航組織（MSICAO）《Doc 01-國家旅遊文件》規範產生機讀區代碼。</p>
+      <h1>MRZ 產生與解析器</h1>
+      <p>
+        依據微國國際民航組織（MSICAO） 《Doc
+        01-國家旅遊文件》規範產生及解析機讀區代碼。
+      </p>
     </header>
 
     <main>
+      <div class="container">
         <section id="input-form">
-            <h2>輸入您的護照資訊</h2>
-            <form id="mrz-form">
-                <div class="form-group">
-                    <label for="passportType">護照類型 (P):</label>
-                    <input type="text" id="passportType" value="P" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="countryCode">國家代碼 (例如: MWR):</label>
-                    <input type="text" id="countryCode" maxlength="3" value="MWR" required>
-                </div>
-                <div class="form-group">
-                    <label for="lastName">姓氏 (拼音, 全大寫):</label>
-                    <input type="text" id="lastName" placeholder="例如: ZHANG" style="text-transform: uppercase;" required>
-                </div>
-                <div class="form-group">
-                    <label for="firstName">名字 (拼音, 全大寫，多字用<隔開):</label>
-                    <input type="text" id="firstName" placeholder="例如: DA<MING" style="text-transform: uppercase;" required>
-                </div>
-                <div class="form-group">
-                    <label for="passportNumber">護照號碼:</label>
-                    <input type="text" id="passportNumber" required>
-                </div>
-                <div class="form-group">
-                    <label for="nationality">國籍 (例如: MWR):</label>
-                    <input type="text" id="nationality" maxlength="3" value="MWR" required>
-                </div>
-                <div class="form-group">
-                    <label for="dob">出生日期 (YYMMDD):</label>
-                    <input type="text" id="dob" placeholder="例如: 950618" maxlength="6" required>
-                </div>
-                <div class="form-group">
-                    <label for="gender">性別 (M/F/<):</label>
-                    <select id="gender" required>
-                        <option value="M">M (男性)</option>
-                        <option value="F">F (女性)</option>
-                        <option value="<">< (未指定)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="expiryDate">有效期 (YYMMDD):</label>
-                    <input type="text" id="expiryDate" placeholder="例如: 350618" maxlength="6" required>
-                </div>
-                <div class="form-group">
-                    <label for="personalIdentifier">個人識別碼 (選填):</label>
-                    <input type="text" id="personalIdentifier" placeholder="例如: 25061812345">
-                </div>
-
-                <button type="submit">生成 MRZ</button>
-                <button type="reset">重設</button>
-            </form>
-        </section>
-
-        <section id="output-result">
-            <h2>生成的 MRZ 代碼</h2>
-            <div class="mrz-output-box">
-                <pre id="mrzLine1"></pre>
-                <pre id="mrzLine2"></pre>
+          <h2>MRZ 生成器</h2>
+          <form id="mrz-form">
+            <div class="form-group">
+              <label for="passportType">護照類型 (P):</label>
+              <input type="text" id="passportType" value="P" readonly />
             </div>
-            <p id="error-message" class="error-text"></p>
+            <div class="form-group">
+              <label for="countryCode">國家代碼 (例如: NRE):</label>
+              <input
+                type="text"
+                id="countryCode"
+                maxlength="3"
+                value="NRE"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="lastName">姓氏 (拼音, 全大寫):</label>
+              <input
+                type="text"
+                id="lastName"
+                placeholder="例如: ZHANG"
+                style="text-transform: uppercase"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="firstName">名字 (拼音, 全大寫，多字用<隔開):</label>
+              <input
+                type="text"
+                id="firstName"
+                placeholder="例如: DA<MING"
+                style="text-transform: uppercase"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="passportNumber">護照號碼:</label>
+              <input type="text" id="passportNumber" required />
+            </div>
+            <div class="form-group">
+              <label for="nationality">國籍 (例如: NRE):</label>
+              <input
+                type="text"
+                id="nationality"
+                maxlength="3"
+                value="NRE"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="dob">出生日期 (YYMMDD):</label>
+              <input
+                type="text"
+                id="dob"
+                placeholder="例如: 950618"
+                maxlength="6"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="gender">性別 (M/F/<):</label>
+              <select id="gender" required>
+                <option value="M">M (男性)</option>
+                <option value="F">F (女性)</option>
+                <option value="<">< (未指定)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="expiryDate">有效期 (YYMMDD):</label>
+              <input
+                type="text"
+                id="expiryDate"
+                placeholder="例如: 350618"
+                maxlength="6"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="personalIdentifier">個人識別碼 (選填):</label>
+              <input
+                type="text"
+                id="personalIdentifier"
+                placeholder="例如: 25061812345"
+              />
+            </div>
+
+            <button type="submit">生成 MRZ</button>
+            <button type="reset">重設</button>
+          </form>
         </section>
 
-        <section id="guidelines">
-            <h2>MRZ 產生規範說明</h2>
-            <ul>
-                <li>本產生器依照《Doc 01-國家旅遊文件》第7條機讀旅行證件格式與設計及附錄三、附錄四規範製作。</li>
-                <li>**字體與分隔符**：所有英文字母需全大寫。名字之間使用單一 `<` 分隔，姓氏與名字之間使用雙 `<<` 分隔 。</li>
-                <li>**校驗碼計算**：護照號碼、出生年月日、證件有效期限、個人識別碼（若適用）以及最終檢查碼皆依模10演算法計算 。</li>
-                <li>**字元對應數值**：校驗碼計算時，數字 0-9 對應 0-9；字母 A-Z 對應 10-35；符號 `<` 對應 0 。</li>
-                <li>**權重循環**：權重依序為 7、3、1 循環使用 。</li>
-            </ul>
+        <section id="generated-mrz-output">
+          <h2>生成的 MRZ 代碼</h2>
+          <div class="mrz-output-box">
+            <pre id="mrzLine1"></pre>
+            <pre id="mrzLine2"></pre>
+          </div>
+          <button id="copyMrzBtn" class="copy-button">複製 MRZ</button>
+          <p id="error-message" class="error-text"></p>
         </section>
+      </div>
     </main>
 
     <footer>
-        <p>&copy; 2025 SamHacker Blog. All rights reserved.</p>
+      <p>&copy; 2025 SamHacker Blog. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
