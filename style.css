@@ -1,0 +1,169 @@
+@font-face {
+  font-family: 'OCR-B';
+  src: url('../fonts/ocr-b-regular.ttf') format("truetype");
+}
+
+:root {
+    --primary-green: #4CAF50; /* 主綠色 */
+    --light-green: #e8f5e9;   /* 淺綠色 */
+    --dark-green: #2e7d32;    /* 深綠色 */
+    --text-color: #333;       /* 主要文字顏色 */
+    --border-color: #ddd;     /* 邊框顏色 */
+    --error-red: #d32f2f;     /* 錯誤訊息顏色 */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-green);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--primary-green);
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+main {
+    flex: 1;
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+section {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+h2 {
+    color: var(--dark-green);
+    border-bottom: 2px solid var(--primary-green);
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+button {
+    background-color: var(--primary-green);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--dark-green);
+}
+
+button[type="reset"] {
+    background-color: #f44336; /* 紅色重設按鈕 */
+}
+
+button[type="reset"]:hover {
+    background-color: #d32f2f;
+}
+
+.mrz-output-box {
+    background-color: #f0f0f0;
+    border: 1px dashed var(--border-color);
+    padding: 15px;
+    font-family: 'OCR-B', 'Courier New', monospace; /* 嘗試使用 OCR-B 或等寬字體 */
+    font-size: 1.2rem;
+    word-break: break-all; /* 防止長字串溢出 */
+}
+
+.mrz-output {
+    background-color: #f0f0f0;
+    border: 1px dashed var(--border-color);
+    padding: 15px;
+    font-family: 'OCR-B', 'Courier New', monospace; /* 嘗試使用 OCR-B 或等寬字體 */
+    font-size: 1.2rem;
+}
+
+.mrz-output-box pre {
+    margin: 0;
+    padding: 5px 0;
+}
+
+.mrz-output pre {
+    margin: 0;
+
+}
+
+.error-text {
+    color: var(--error-red);
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    background-color: var(--dark-green);
+    color: white;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    main {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+}
