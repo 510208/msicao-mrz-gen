@@ -14,6 +14,29 @@
   --warning-orange: #ff9800; /* 警告訊息顏色 */
 }
 
+a {
+  color: var(--success-green);
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+}
+
+a::after {
+  content: "";
+  position: absolute;
+  height: 1.1px;
+  /* top: 5px; */
+  left: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--success-green);
+  transition: width 0.2s;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
