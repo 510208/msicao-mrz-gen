@@ -1,0 +1,256 @@
+@font-face {
+  font-family: "OCR-B";
+  src: url("/fonts/ocr-b-regular.ttf") format("truetype");
+}
+
+:root {
+  --primary-green: #4caf50; /* 主綠色 */
+  --light-green: #e8f5e9; /* 淺綠色 */
+  --dark-green: #2e7d32; /* 深綠色 */
+  --text-color: #333; /* 主要文字顏色 */
+  --border-color: #ddd; /* 邊框顏色 */
+  --error-red: #d32f2f; /* 錯誤訊息顏色 */
+  --success-green: #4caf50; /* 成功訊息顏色 */
+  --warning-orange: #ff9800; /* 警告訊息顏色 */
+}
+
+a {
+  color: var(--success-green);
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+}
+
+a::after {
+  content: "";
+  position: absolute;
+  height: 1.1px;
+  /* top: 5px; */
+  left: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--success-green);
+  transition: width 0.2s;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: var(--light-green);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscal;
+}
+
+header {
+  background-color: transparent;
+  color: black;
+  padding-top: 100px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+main {
+  display: flex; /* 啟用 Flexbox 佈局 */
+  justify-content: center; /* 讓容器在可用空間內居中對齊 */
+  gap: 2rem; /* 在兩個 .container 之間增加 2rem 的間距 */
+  flex-wrap: wrap; /* 當螢幕寬度不足時，允許容器換行，以適應小螢幕 */
+  padding: 2rem; /* 在 main 元素周圍增加一些內邊距，提升視覺效果 */
+}
+
+div.container {
+  flex: 1;
+  max-width: 960px;
+  min-width: 300px; /* 確保容器在小螢幕上不會過小 */
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 8px;
+}
+
+section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+h2 {
+  color: var(--dark-green);
+  border-bottom: 2px solid var(--primary-green);
+  padding-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  outline-color: var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus {
+  border-color: var(--primary-green);
+  outline-color: var(--primary-green);
+  caret-color: var(--primary-green);
+  caret-shape: block;
+  transition: all 0.3s ease-in-out;
+}
+
+button {
+  background-color: var(--primary-green);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--dark-green);
+}
+
+button[type="reset"] {
+  background-color: #f44336; /* 紅色重設按鈕 */
+}
+
+button[type="reset"]:hover {
+  background-color: #d32f2f;
+}
+
+.mrz-output-box {
+  background-color: #f0f0f0;
+  border: 1px dashed var(--border-color);
+  padding: 15px;
+  font-family: "OCR-B", "Courier New", monospace; /* 嘗試使用 OCR-B 或等寬字體 */
+  font-size: 1.2rem;
+  margin-bottom: 1rem; /* 與複製按鈕間距 */
+}
+
+.mrz-output-box pre {
+  margin: 0;
+  font-family: "OCR-B", "Courier New", monospace; /* 嘗試使用 OCR-B 或等寬字體 */
+  padding: 5px 0;
+}
+
+.error-text {
+  color: var(--error-red);
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.result-box {
+  background-color: #f9f9f9;
+  border: 1px solid var(--border-color);
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 1.5rem;
+}
+
+.result-box p {
+  margin-bottom: 0.5rem;
+}
+
+.result-box strong {
+  color: var(--dark-green);
+}
+
+/* 狀態指示器 */
+.status-indicator {
+  font-size: 0.9em;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-left: 5px;
+}
+
+.status-indicator.valid {
+  background-color: var(--success-green);
+  color: white;
+}
+
+.status-indicator.invalid {
+  background-color: var(--error-red);
+  color: white;
+}
+
+.status-indicator.not-applicable {
+  background-color: #9e9e9e; /* 灰色 */
+  color: white;
+}
+
+.copy-button {
+  background-color: #007bff; /* 藍色複製按鈕 */
+}
+
+.copy-button:hover {
+  background-color: #0056b3;
+}
+
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  background-color: var(--dark-green);
+  color: white;
+  font-size: 0.9rem;
+}
+
+p.description {
+  margin: 0;
+  font-size: 0.8rem;
+  color: gray;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  main {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+}

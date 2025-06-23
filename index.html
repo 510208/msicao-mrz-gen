@@ -4,11 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MRZ 產生與解析器 - SamHacker Blog</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles/normalize.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
   </head>
-  <body>
+  <body class="emfont-TaipeiSansTC">
     <header>
-      <h1>MRZ 產生與解析器</h1>
+      <h1 class="emfont-TaipeiSansTC-700">MRZ 產生與解析器</h1>
       <p>
         依據
         <a href="">微國國際民航組織（MSICAO）</a>
@@ -20,24 +25,33 @@
     <main>
       <div class="container">
         <section id="input-form">
-          <h2>MRZ 生成器</h2>
+          <!-- <h2>MRZ 生成器</h2> -->
           <form id="mrz-form">
             <div class="form-group">
-              <label for="passportType">護照類型 (P):</label>
+              <label for="passportType" class="emfont-TaipeiSansTC-700"
+                >護照類型 (P):</label
+              >
               <input type="text" id="passportType" value="P" readonly />
+              <p class="description"><span>P</span> 代表護照類型。</p>
             </div>
             <div class="form-group">
-              <label for="countryCode">國家代碼 (例如: NRE):</label>
+              <label for="countryCode" class="emfont-TaipeiSansTC-700"
+                >國家代碼 (例如: NRE):</label
+              >
               <input
                 type="text"
                 id="countryCode"
                 maxlength="3"
                 value="NRE"
                 required
+                style="text-transform: uppercase"
               />
+              <p class="description">輸入持照人所有的微國國家簡稱。</p>
             </div>
             <div class="form-group">
-              <label for="lastName">姓氏 (拼音, 全大寫):</label>
+              <label for="lastName" class="emfont-TaipeiSansTC-700"
+                >姓氏 (拼音, 全大寫):</label
+              >
               <input
                 type="text"
                 id="lastName"
@@ -45,9 +59,16 @@
                 style="text-transform: uppercase"
                 required
               />
+              <p class="description">
+                持照人姓氏，
+                非拉丁字母之姓名（如中文、阿拉伯文、俄文等）應依照國際標準進行轉寫，
+                建議使用 MSICAO 指定之轉寫表（Doc 01的附錄五、附錄六）。
+              </p>
             </div>
             <div class="form-group">
-              <label for="firstName">名字 (拼音, 全大寫，多字用<隔開):</label>
+              <label for="firstName" class="emfont-TaipeiSansTC-700"
+                >名字 (拼音, 全大寫，多字用<隔開):</label
+              >
               <input
                 type="text"
                 id="firstName"
@@ -55,23 +76,52 @@
                 style="text-transform: uppercase"
                 required
               />
+              <p class="description">
+                持照人名字， 多個名字之間用<符號分隔（例如: DA<MING），
+                以便於識別。
+                非拉丁字母之姓名（如中文、阿拉伯文、俄文等）應依照國際標準進行轉寫，
+                建議使用 MSICAO 指定之轉寫表（Doc 01的附錄五、附錄六）。
+              </p>
             </div>
             <div class="form-group">
-              <label for="passportNumber">護照號碼:</label>
-              <input type="text" id="passportNumber" required />
+              <label for="passportNumber" class="emfont-TaipeiSansTC-700"
+                >護照號碼:</label
+              >
+              <input
+                type="text"
+                id="passportNumber"
+                style="text-transform: uppercase"
+                required
+              />
+              <p class="description">
+                護照號碼應為拉丁字母和數字的組合，且不包含空格或特殊字符。 例如:
+                A12345678。
+                <br />
+                注意：護照號碼中建議不要包含字母O（大寫英文字母O）或I（大寫英文字母I），
+                因為這些字母可能與數字0（零）或1（數字一）混淆。
+              </p>
             </div>
             <div class="form-group">
-              <label for="nationality">國籍 (例如: NRE):</label>
+              <label for="nationality" class="emfont-TaipeiSansTC-700"
+                >國籍 (例如: NRE):</label
+              >
               <input
                 type="text"
                 id="nationality"
                 maxlength="3"
                 value="NRE"
                 required
+                style="text-transform: uppercase"
               />
+              <p class="description">
+                持照人國籍，請輸入正確的微國國籍代碼（例如:
+                NRE為諾瓦雷克斯帝國）。
+              </p>
             </div>
             <div class="form-group">
-              <label for="dob">出生日期 (YYMMDD):</label>
+              <label for="dob" class="emfont-TaipeiSansTC-700"
+                >出生日期 (YYMMDD):</label
+              >
               <input
                 type="text"
                 id="dob"
@@ -79,17 +129,32 @@
                 maxlength="6"
                 required
               />
+              <p class="description">
+                持照人出生日期，格式為YYMMDD（例如: 950618代表1995年6月18日）。
+                <br />
+                注意： 出生日期應符合微國國際民航組織（MSICAO）規範，
+                並且應該是有效的日期。
+              </p>
             </div>
             <div class="form-group">
-              <label for="gender">性別 (M/F/<):</label>
+              <label for="gender" class="emfont-TaipeiSansTC-700"
+                >性別 (M/F/<):</label
+              >
               <select id="gender" required>
                 <option value="M">M (男性)</option>
                 <option value="F">F (女性)</option>
                 <option value="<">< (未指定)</option>
               </select>
+              <p class="description">
+                持照人性別，請選擇正確的選項。
+                <br />
+                注意：性別應符合微國國際民航組織（MSICAO）規範。
+              </p>
             </div>
             <div class="form-group">
-              <label for="expiryDate">有效期 (YYMMDD):</label>
+              <label for="expiryDate" class="emfont-TaipeiSansTC-700"
+                >有效期 (YYMMDD):</label
+              >
               <input
                 type="text"
                 id="expiryDate"
@@ -97,23 +162,36 @@
                 maxlength="6"
                 required
               />
+              <p class="description">護照有效期，格式同出生日期。</p>
             </div>
             <div class="form-group">
-              <label for="personalIdentifier">個人識別碼 (選填):</label>
+              <label for="personalIdentifier" class="emfont-TaipeiSansTC-700"
+                >個人識別碼 (選填):</label
+              >
               <input
                 type="text"
                 id="personalIdentifier"
                 placeholder="例如: 25061812345"
               />
+              <p class="description">
+                個人識別碼（Personal Identifier）是可選填的欄位，
+                用於提供額外的個人識別信息。
+                <br />
+                注意：如果填寫，請確保其符合微國國際民航組織（MSICAO）規範。
+              </p>
             </div>
 
-            <button type="submit">生成 MRZ</button>
-            <button type="reset">重設</button>
+            <button type="submit" class="emfont-TaipeiSansTC-700">
+              <i class="bi bi-check-circle-fill"></i> 生成 MRZ
+            </button>
+            <button type="reset" class="emfont-TaipeiSansTC-700">
+              <i class="bi bi-x-circle-fill"></i> 重設
+            </button>
           </form>
         </section>
 
         <section id="generated-mrz-output">
-          <h2>生成的 MRZ 代碼</h2>
+          <h2 class="emfont-TaipeiSansTC-700">生成的 MRZ 代碼</h2>
           <div class="mrz-output-box">
             <pre id="mrzLine1"></pre>
             <pre id="mrzLine2"></pre>
@@ -128,6 +206,10 @@
       <p>&copy; 2025 SamHacker Blog. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="scripts/script.js"></script>
+    <script type="module">
+      import "https://font.emtech.cc/emfont.js";
+      emfont.init();
+    </script>
   </body>
 </html>
