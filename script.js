@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // --- 組態常數 ---
   const CONFIG = {
-    MRZ_LINE_LENGTH: 40,
+    MRZ_LINE_LENGTH: 44,
     PASSPORT_TYPE: "P",
     COUNTRY_CODE_LENGTH: 3,
     PASSPORT_NUMBER_FIELD_LENGTH: 9,
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function buildMrzLine1({ countryCode, lastName, firstName }) {
     const type = CONFIG.PASSPORT_TYPE;
     const country = sanitizeAndPad(countryCode, CONFIG.COUNTRY_CODE_LENGTH);
-    const prefix = `${type}${CONFIG.FILLER}${country}${CONFIG.FILLER}`;
+    const prefix = `${type}${CONFIG.FILLER}${country}${CONFIG.FILLER}${CONFIG.FILLER}`;
 
     const nameFieldContent = `${sanitizeAndPad(lastName, 0)}<<${sanitizeAndPad(
       firstName,
@@ -116,31 +116,31 @@ document.addEventListener("DOMContentLoaded", () => {
       CONFIG.PASSPORT_NUMBER_FIELD_LENGTH
     );
     const passportNumCD = calculateCheckDigit(passportNumPadded);
-    const part1 = `${passportNumPadded}${passportNumCD}`;
+    const part1 = `${passportNumPadded}${CONFIG.FILLER}${passportNumCD}`;
 
     // 2. 國籍 (3位)
     const part2 = sanitizeAndPad(nationality, CONFIG.COUNTRY_CODE_LENGTH);
 
     // 3. 出生日期 + 校驗碼 (7位)
     const dobCD = calculateCheckDigit(dob);
-    const part3 = `${dob}${dobCD}`;
+    const part3 = `${dob}`;
 
     // 4. 性別 (1位)
     const part4 = sanitizeAndPad(gender, 1);
 
     // 5. 有效期 + 校驗碼 (7位)
     const expiryDateCD = calculateCheckDigit(expiryDate);
-    const part5 = `${expiryDate}${expiryDateCD}`;
+    const part5 = `${expiryDate}${CONFIG.FILLER}${expiryDateCD}`;
 
     // 6. 個人識別碼部分 (共 15 位)
     // a. 將使用者輸入的個人識別碼，填充或截斷至 14 位，作為計算校驗碼的資料。
-    const personalIdData = sanitizeAndPad(personalIdentifier, 14);
+    const personalIdData = sanitizeAndPad(personalIdentifier, 7);
 
     //    b. 根據這 14 位的資料計算校驗碼。
     const personalIdCD = calculateCheckDigit(personalIdData);
 
     // 7. 組合所有部分。總長度: 10+3+7+1+7+14+1 = 44
-    const mrzLine2 = `${part1}${part2}${part3}${part4}${part5}${personalIdData}${personalIdCD}`;
+    const mrzLine2 = `${part1}${CONFIG.FILLER}${part2}${CONFIG.FILLER}${part3}${CONFIG.FILLER}${part4}${CONFIG.FILLER}${part5}${CONFIG.FILLER}${CONFIG.FILLER}${personalIdData}${CONFIG.FILLER}${personalIdCD}`;
 
     return mrzLine2;
   }
