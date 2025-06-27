@@ -4,21 +4,93 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MRZ 產生與解析器 - SamHacker Blog</title>
+
+    <!-- 重置CSS設定 -->
     <link rel="stylesheet" href="styles/normalize.css" />
+    <!-- 引入Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <!-- 引入外部CSS -->
     <link rel="stylesheet" href="styles/style.css" />
+    <!-- 引入圖示 -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
     />
   </head>
   <body class="emfont-TaipeiSansTC">
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="msicaoModal"
+      tabindex="-1"
+      aria-labelledby="msicaoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content border-0 shadow rounded">
+          <div class="modal-header">
+            <h5 class="modal-title" id="msicaoModalLabel">MSICAO 授權資訊</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              本網站已獲得微國國際民航組織（MSICAO）的授權，
+              並符合其規範要求。所有生成的 MRZ 代碼均符合 MSICAO
+              的標準，並可用於正式的護照和其他旅行文件。
+            </p>
+            <p>以下為證明文件：</p>
+            <!-- 左右並排兩張img -->
+            <div class="d-flex justify-content-center">
+              <a data-fslightbox href="images/msicao-cert_zh.jpg">
+                <img
+                  src="images/msicao-cert_zh.jpg"
+                  alt="英文授權證明"
+                  class="me-2 certificate lightbox"
+                />
+              </a>
+              <a data-fslightbox href="images/msicao-cert_en.jpg">
+                <img
+                  src="images/msicao-cert_en.jpg"
+                  alt="中文授權證明"
+                  class="ms-2 certificate lightbox"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              關閉
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <header>
       <h1 class="emfont-TaipeiSansTC-700">MRZ 產生與解析器</h1>
       <p>
         依據
         <a href="">微國國際民航組織（MSICAO）</a>
         <a href="">《Doc 01-國家旅遊文件》</a>
-        規範產生及解析機讀區代碼。
+        規範產生及解析機讀區代碼。<br />
+        <a data-bs-toggle="modal" data-bs-target="#msicaoModal" href="#">
+          已獲得MSICAO授權
+        </a>
+        ，並符合其規範要求。
       </p>
     </header>
 
@@ -27,6 +99,13 @@
         <section id="input-form">
           <!-- <h2>MRZ 生成器</h2> -->
           <form id="mrz-form">
+            <button type="submit" class="emfont-TaipeiSansTC-700">
+              <i class="bi bi-check-circle-fill"></i> 生成 MRZ
+            </button>
+            <button type="reset" class="emfont-TaipeiSansTC-700">
+              <i class="bi bi-x-circle-fill"></i> 重設
+            </button>
+
             <div class="form-group">
               <label for="passportType" class="emfont-TaipeiSansTC-700"
                 >護照類型 (P):</label
@@ -193,8 +272,8 @@
         <section id="generated-mrz-output">
           <h2 class="emfont-TaipeiSansTC-700">生成的 MRZ 代碼</h2>
           <div class="mrz-output-box">
-            <pre id="mrzLine1"></pre>
-            <pre id="mrzLine2"></pre>
+            <pre id="mrzLine1">　</pre>
+            <pre id="mrzLine2">　</pre>
           </div>
           <!-- <button id="copyMrzBtn" class="copy-button">複製 MRZ</button> -->
           <p id="error-message" class="error-text"></p>
@@ -206,7 +285,15 @@
       <p>&copy; 2025 SamHacker Blog. All rights reserved.</p>
     </footer>
 
+    <!-- 匯入其他元件 -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="scripts/script.js"></script>
+    <script src="scripts/fslightbox.js"></script>
     <script type="module">
       import "https://font.emtech.cc/emfont.js";
       emfont.init();

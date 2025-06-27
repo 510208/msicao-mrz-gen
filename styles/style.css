@@ -33,6 +33,10 @@ a::after {
   transition: width 0.2s;
 }
 
+a:hover {
+  color: var(--success-green);
+}
+
 a:hover::after {
   width: 100%;
 }
@@ -144,6 +148,8 @@ button {
   cursor: pointer;
   font-size: 1rem;
   margin-right: 10px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   transition: background-color 0.3s ease;
 }
 
@@ -171,7 +177,7 @@ button[type="reset"]:hover {
 .mrz-output-box pre {
   margin: 0;
   font-family: "OCR-B", "Courier New", monospace; /* 嘗試使用 OCR-B 或等寬字體 */
-  padding: 5px 0;
+  padding: 0px 0;
 }
 
 .error-text {
@@ -253,4 +259,11 @@ p.description {
   header h1 {
     font-size: 2rem;
   }
+}
+
+img.certificate {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }

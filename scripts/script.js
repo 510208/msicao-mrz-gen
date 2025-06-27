@@ -192,8 +192,21 @@ document.addEventListener("DOMContentLoaded", () => {
       // --- 顯示結果 ---
       mrzLine1Output.textContent = mrz1;
       mrzLine2Output.textContent = mrz2;
+
+      Swal.fire({
+        title: "MRZ已產生",
+        text: "你所請求的MRZ已成功產生，請檢查下方輸出。",
+        icon: "success",
+      });
+
+      mrzLine1Output.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
       errorMessage.textContent = error.message;
+      Swal.fire({
+        title: "錯誤",
+        text: "請檢查主控台所顯示的錯誤。如有需要，請向開發者反饋。",
+        icon: "error",
+      });
       console.error(error);
     }
   }
