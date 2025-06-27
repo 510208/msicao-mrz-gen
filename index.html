@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MRZ 產生與解析器 - SamHacker Blog</title>
+    <title>MRZ產生器 - MSICAO MRZ 產生器</title>
 
     <!-- 重置CSS設定 -->
     <link rel="stylesheet" href="styles/normalize.css" />
@@ -16,6 +16,7 @@
     />
     <!-- 引入外部CSS -->
     <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/infobox.css" />
     <!-- 引入圖示 -->
     <link
       rel="stylesheet"
@@ -59,14 +60,14 @@
               <a data-fslightbox href="images/msicao-cert_zh.jpg">
                 <img
                   src="images/msicao-cert_zh.jpg"
-                  alt="英文授權證明"
+                  alt="中文授權證明"
                   class="me-2 certificate lightbox"
                 />
               </a>
               <a data-fslightbox href="images/msicao-cert_en.jpg">
                 <img
                   src="images/msicao-cert_en.jpg"
-                  alt="中文授權證明"
+                  alt="英文授權證明"
                   class="ms-2 certificate lightbox"
                 />
               </a>
@@ -97,18 +98,66 @@
       <h1 class="emfont-TaipeiSansTC-700">MRZ 產生與解析器</h1>
       <p>
         依據
-        <a href="">微國國際民航組織（MSICAO）</a>
-        <a href="">《Doc 01-國家旅遊文件》</a>
+        <a href="https://discord.com/invite/WJZUZjk7SP"
+          >微國國際民航組織（MSICAO）</a
+        >
+        <a
+          href="https://discord.com/channels/1235897474070351872/1383991730763862027"
+          >《Doc 01-國家旅遊文件》</a
+        >
         規範產生及解析機讀區代碼。<br />
         <a data-bs-toggle="modal" data-bs-target="#msicaoModal" href="#">
           已獲得MSICAO授權
         </a>
         ，並符合其規範要求。
       </p>
+      <nav>
+        <ul class="flex-nav">
+          <li>
+            <a href="#" class="active shadow-sm emfont-TaipeiSansTC-700">
+              首頁
+            </a>
+          </li>
+          <li><a href="about.html">關於</a></li>
+          <li><a href="msicao_rule.html">MSICAO規範</a></li>
+        </ul>
+      </nav>
     </header>
 
     <main>
       <div class="container">
+        <div class="infobox warning">
+          <div class="infobox-icon">
+            <i class="bi bi-headset-vr"></i>
+            <!-- 替換為您使用的圖標庫 -->
+          </div>
+          <div class="infobox-content">
+            <div class="infobox-title">這是架空設定！</div>
+            <div class="infobox-message">
+              請注意，這個MRZ產生器的格式為微國民航組織MSICAO訂定，雖參考ICAO
+              Doc 9303撰寫，但有被MSICAO修改過以符合微國的需求。
+              <br />
+              我們必須先行提醒，這個工具是為了微國的虛構設定而設計的，並不適用於現實世界中的護照或其他官方文件。如果您需要處理真實護照或官方文件，請務必遵循相關國際標準和法律規範。
+              <br />
+              因誤會造成的任何法律問題或其他後果，本專案不承擔任何責任。另外本工具僅供學術研究和娛樂用途，並不代表任何真實國家或組織的官方文件。
+              <br />
+              如需處理真實的機讀區相關資訊，請參考
+              <a
+                href="https://zh.wikipedia.org/zh-tw/%E5%8F%AF%E6%A9%9F%E8%AE%80%E8%AD%B7%E7%85%A7"
+              >
+                中文維基百科上關於MRZ的條目
+              </a>
+              或
+              <a
+                href="https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf"
+              >
+                ICAO官方文件
+              </a>
+              。
+            </div>
+          </div>
+        </div>
+
         <section id="input-form">
           <!-- <h2>MRZ 生成器</h2> -->
           <form id="mrz-form">
@@ -285,11 +334,35 @@
         <section id="generated-mrz-output">
           <h2 class="emfont-TaipeiSansTC-700">生成的 MRZ 代碼</h2>
           <div class="mrz-output-box">
-            <pre id="mrzLine1">　</pre>
-            <pre id="mrzLine2">　</pre>
+            <pre id="mrzLine1">請填妥表單後，點擊生成 MRZ</pre>
+            <pre id="mrzLine2">
+字體依規定須採用OCR-B，請確保電腦中有安裝，或參考下方說明</pre
+            >
           </div>
           <!-- <button id="copyMrzBtn" class="copy-button">複製 MRZ</button> -->
           <p id="error-message" class="error-text"></p>
+          <div class="infobox info">
+            <div class="infobox-icon">
+              <i class="bi bi-file-earmark-font-fill"></i>
+              <!-- 替換為您使用的圖標庫 -->
+            </div>
+            <div class="infobox-content">
+              <div class="infobox-title">字體提醒</div>
+              <div class="infobox-message">
+                MSICAO規定機讀區須採用OCR-B字體，如果您採用Canva設計自己國家的護照，請在下載護照後透過Photoshop或小畫家等工具加上OCR-B格式的MRZ、或是訂閱Canva
+                Pro。
+                <br />
+                如果以上兩種方法皆有問題，也可以選擇將本工具生成的MRZ代碼截圖並貼到您的護照設計中。
+                <br />
+                如電腦中無OCR-B字體，您可以在本網站上下載：
+                <a href="fonts/ocr-b-regular.ttf" target="_blank">
+                  <i class="bi bi-download"></i>
+                  <strong>點此下載 OCR-B 字體</strong>
+                </a>
+                <br />
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </main>

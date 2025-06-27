@@ -267,3 +267,23 @@ img.certificate {
   display: block;
   margin: 0 auto;
 }
+
+.flex-nav {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  gap: 1rem;
+}
+
+.flex-nav li {
+  display: inline;
+  font-size: 1.1rem;
+}
+
+.flex-nav li a.active {
+  font-weight: 700;
+  color: black;
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}

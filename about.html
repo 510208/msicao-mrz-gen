@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>關於 - MSICAO MRZ 產生器</title>
+
+    <!-- 重置CSS設定 -->
+    <link rel="stylesheet" href="styles/normalize.css" />
+    <!-- 引入Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <!-- 引入外部CSS -->
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/infobox.css" />
+    <!-- 引入圖示 -->
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    /> -->
+  </head>
+  <body class="emfont-TaipeiSansTC">
+    <header>
+      <h1 class="emfont-TaipeiSansTC-700">關於軟體</h1>
+      <p>
+        關於這個工具的介紹和使用說明，請參考以下內容。
+        <br />
+        依據
+        <a href="https://discord.com/invite/WJZUZjk7SP"
+          >微國國際民航組織（MSICAO）</a
+        >
+        <a
+          href="https://discord.com/channels/1235897474070351872/1383991730763862027"
+          >《Doc 01-國家旅遊文件》</a
+        >
+        規範產生及解析機讀區代碼。
+      </p>
+      <nav>
+        <ul class="flex-nav">
+          <li><a href="index.html">首頁</a></li>
+          <li>
+            <a href="#" class="active shadow-sm emfont-TaipeiSansTC-700">
+              關於
+            </a>
+          </li>
+          <li><a href="msicao_rule.html">MSICAO規範</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        <section id="about">
+          <h2 class="emfont-TaipeiSansTC-700">關於這個工具</h2>
+          <p>
+            這套工具由諾瓦雷克斯帝國數位政務部長
+            SamHacker開發，目標是讓各國人士可以用最簡單的方式為自己的國民辦理文件。
+          </p>
+          <p>
+            本工具提供了護照機讀區（MRZ）代碼的生成和解析功能，使用者只需輸入必要的護照資訊，即可自動生成符合微國國際標準的MRZ代碼。
+            有了這項工具，你不再需要手動計算或格式化MRZ代碼，這將大大簡化護照申請和管理流程。
+            我很自信的說，這是目前網路上最簡單易用的MRZ生成器，沒有之一！
+          </p>
+          <div class="infobox warning">
+            <div class="infobox-icon">
+              <i class="bi bi-headset-vr"></i>
+              <!-- 替換為您使用的圖標庫 -->
+            </div>
+            <div class="infobox-content">
+              <div class="infobox-title">這是架空設定！</div>
+              <div class="infobox-message">
+                請注意，這個MRZ產生器的格式為微國民航組織MSICAO訂定，雖參考ICAO
+                Doc 9303撰寫，但有被MSICAO修改過以符合微國的需求。
+                <br />
+                我們必須先行提醒，這個工具是為了微國的虛構設定而設計的，並不適用於現實世界中的護照或其他官方文件。如果您需要處理真實護照或官方文件，請務必遵循相關國際標準和法律規範。
+                <br />
+                因誤會造成的任何法律問題或其他後果，本專案不承擔任何責任。另外本工具僅供學術研究和娛樂用途，並不代表任何真實國家或組織的官方文件。
+                <br />
+                如需處理真實的機讀區相關資訊，請參考
+                <a
+                  href="https://zh.wikipedia.org/zh-tw/%E5%8F%AF%E6%A9%9F%E8%AE%80%E8%AD%B7%E7%85%A7"
+                >
+                  中文維基百科上關於MRZ的條目
+                </a>
+                或
+                <a
+                  href="https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf"
+                >
+                  ICAO官方文件
+                </a>
+                。
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="features">
+          <h2 class="emfont-TaipeiSansTC-700">功能特色</h2>
+          <ul>
+            <li>自動生成符合MSICAO標準的MRZ代碼</li>
+            <li>支援標準護照類型（P）</li>
+            <li>簡單易用的介面，無需專業知識</li>
+            <li>為首款通過MSICAO驗證，確定可給國際使用的工具</li>
+          </ul>
+        </section>
+        <section id="msicao-certiface">
+          <h2 class="emfont-TaipeiSansTC-700">MSICAO 授權</h2>
+          <p>
+            本工具已獲得微國國際民航組織（MSICAO）認證，符合其
+            <a
+              href="https://discord.com/channels/1235897474070351872/1383991730763862027"
+              >Doc 01-國家旅遊文件</a
+            >
+            的規範要求。
+          </p>
+          <p>以下為證明文件：</p>
+          <!-- 左右並排兩張img -->
+          <div class="d-flex" style="max-width: 600px; width: 100%">
+            <a data-fslightbox href="images/msicao-cert_zh.jpg">
+              <img
+                src="images/msicao-cert_zh.jpg"
+                alt="中文授權證明"
+                class="img-fluid me-2 certificate lightbox"
+              />
+            </a>
+            <a data-fslightbox href="images/msicao-cert_en.jpg">
+              <img
+                src="images/msicao-cert_en.jpg"
+                alt="英文授權證明"
+                class="img-fluid ms-2 certificate lightbox"
+              />
+            </a>
+          </div>
+        </section>
+        <section id="license">
+          <h2 class="emfont-TaipeiSansTC-700">授權與使用條款</h2>
+          <p>
+            本工具遵循
+            <a
+              href="
+            https://github.com/510208/msicao-mrz-gen/blob/main/LICENSE"
+            >
+              GNU開源規範
+            </a>
+            ，使用者可以自由使用、修改和分發，但需遵守相關授權條款。
+          </p>
+          <p>
+            使用本工具即表示您同意遵守上述條款，並承認本工具的開發者
+            <a href="https://www.micropedia.uk/wiki/Samhacker">SamHacker</a>
+            保留所有權利。
+          </p>
+        </section>
+        <section id="thanks">
+          <h2 class="emfont-TaipeiSansTC-700">銘謝</h2>
+          <p>
+            感謝微國國際民航組織（MSICAO）提供的標準和指導，使本工具能夠符合國際要求。
+            另外感謝以下專案的開發者和貢獻者：
+          </p>
+          <ul>
+            <li>
+              <a href="https://bootstrap.com/">Bootstrap</a>
+              - 提供模態框元件與樣式設定
+            </li>
+            <li>
+              <a href="https://github.com/510208/msicao-mrz-gen"
+                >MSICAO MRZ 產生器</a
+              >
+              - 本專案的GitHub倉庫，歡迎大家參與貢獻
+            </li>
+            <li>
+              <a href="https://fslightbox.com/javascript/">FS Lightbox</a> -
+              提供圖片（證明文件等）燈箱效果
+            </li>
+            <li>
+              <a href="https://font.emtech.cc/">EmFont</a> -
+              提供字型樣式，讓本工具的介面更美觀
+            </li>
+            <li>
+              <a href="https://sweetalert2.github.io/">SweetAlert2</a> -
+              提供美觀的警告與通知視窗
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        &copy; 2025
+        <a href="https://discord.gg/7umEfY3dtV">諾瓦雷克斯帝國</a> 數位政務部
+        部長 <a href="https://www.micropedia.uk/wiki/Samhacker">SamHacker</a> (
+        <a href="https://github.com/510208">510208</a>
+        )保有一切權利。
+        <br />
+        此軟體
+        <a data-bs-toggle="modal" href="#msicao-certiface">
+          已獲得MSICAO認證
+        </a>
+        ，請遵守軟體的
+        <a href="https://github.com/510208/msicao-mrz-gen/blob/main/LICENSE">
+          GNU開源規範
+        </a>
+        使用本工具
+      </p>
+    </footer>
+
+    <!-- 匯入其他元件 -->
+    <!-- <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+      crossorigin="anonymous"
+    ></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <!-- <script src="scripts/script.js"></script> -->
+    <script src="scripts/fslightbox.js"></script>
+    <script type="module">
+      import "https://font.emtech.cc/emfont.js";
+      emfont.init();
+    </script>
+  </body>
+</html>

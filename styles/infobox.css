@@ -1,0 +1,105 @@
+.infobox {
+  padding: 15px;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/*
+ * Infobox 元件使用方法：
+ *
+ * 1. 基本結構：
+ *    使用 <div class="infobox [type]">...</div> 來建立一個訊息框。
+ *    [type] 可以是 'success', 'info', 'warning', 'error'。
+ *
+ * 2. 內容結構：
+ *    - .infobox-icon: 用於放置圖標 (例如 Font Awesome)。
+ *    - .infobox-content: 包含訊息的標題和內容。
+ *    - .infobox-title: 訊息的標題。
+ *    - .infobox-message: 訊息的詳細內容。
+ *
+ * 範例 HTML 結構：
+ * <div class="infobox success">
+ *   <div class="infobox-icon">
+ *     <i class="fas fa-check-circle"></i> <!-- 替換為您使用的圖標庫 -->
+ *   </div>
+ *   <div class="infobox-content">
+ *     <div class="infobox-title">操作成功！</div>
+ *     <div class="infobox-message">您的資料已成功儲存。</div>
+ *   </div>
+ * </div>
+ */
+
+.infobox {
+  padding: 15px;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.infobox-icon {
+  font-size: 1.5rem;
+}
+
+.infobox-content {
+  flex-grow: 1;
+}
+
+.infobox-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.infobox-message {
+  font-size: 0.9rem;
+}
+
+/* Success Infobox */
+.infobox.success {
+  background-color: #e6ffe6; /* Light green */
+  border-color: #4caf50; /* Green */
+  color: #2e7d32; /* Darker green */
+}
+
+.infobox.success .infobox-icon {
+  color: #4caf50; /* Green */
+}
+
+/* Info Infobox */
+.infobox.info {
+  background-color: #e0f2f7; /* Light blue */
+  border-color: #2196f3; /* Blue */
+  color: #1565c0; /* Darker blue */
+}
+
+.infobox.info .infobox-icon {
+  color: #2196f3; /* Blue */
+}
+
+/* Warning Infobox */
+.infobox.warning {
+  background-color: #fff3e0; /* Light orange */
+  border-color: #ff9800; /* Orange */
+  color: #e65100; /* Darker orange */
+}
+
+.infobox.warning .infobox-icon {
+  color: #ff9800; /* Orange */
+}
+
+/* Error Infobox */
+.infobox.error {
+  background-color: #ffebee; /* Light red */
+  border-color: #f44336; /* Red */
+  color: #c62828; /* Darker red */
+}
+
+.infobox.error .infobox-icon {
+  color: #f44336; /* Red */
+}
