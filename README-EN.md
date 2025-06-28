@@ -1,4 +1,4 @@
-<p align="right"><img src="https://img.shields.io/badge/%E4%B8%AD%E6%96%87%EF%BC%88%E8%87%BA%E7%81%A3%EF%BC%89-666666?style=for-the-badge"><a href="https://github.com/510208/msicao-mrz-gen/blob/main/README-EN.md"><img src="https://img.shields.io/badge/English-010101?style=for-the-badge"></a></p>
+<p align="right"><a href="https://github.com/510208/msicao-mrz-gen/blob/main/README.md"><img src="https://img.shields.io/badge/%E4%B8%AD%E6%96%87%EF%BC%88%E8%87%BA%E7%81%A3%EF%BC%89-666666?style=for-the-badge"></a><img src="https://img.shields.io/badge/English-010101?style=for-the-badge"></p>
 
 # MSICAO MRZ Generator
 
