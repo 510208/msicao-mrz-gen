@@ -109,6 +109,13 @@ h2 {
   margin-top: 0;
 }
 
+h3 {
+  color: var(--dark-green);
+  border-bottom: 1px solid var(--primary-green);
+  padding-bottom: 0.5rem;
+  margin-top: 0;
+}
+
 .form-group {
   margin-bottom: 1rem;
 }
@@ -235,7 +242,7 @@ button[type="reset"]:hover {
 }
 
 footer {
-  text-align: center;
+  text-align: left;
   padding: 1.5rem;
   margin-top: 2rem;
   background-color: var(--dark-green);
